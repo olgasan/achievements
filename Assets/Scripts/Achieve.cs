@@ -15,6 +15,17 @@ public class Achieve
 		achievements.Add (achievement);
 	}
 
+	public void OnEvent (string eventType)
+	{
+		foreach (IAchievement achievement in achievements)
+		{
+			if (achievement.Type == eventType)
+			{
+				achievement.Progress ++;
+			}
+		}
+	}
+
 	private void ValidateAchievement (IAchievement achievement)
 	{
 		if (achievement == null)
