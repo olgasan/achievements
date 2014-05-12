@@ -3,7 +3,7 @@ using NSubstitute;
 
 namespace UnityTest
 {
-	internal class AchievementTest 
+	internal class AchieveTest 
 	{
 		private Achieve achieve;
 
@@ -24,29 +24,22 @@ namespace UnityTest
 		[ExpectedException]
 		public void CannotRegisterDuplicatedAchievements ()
 		{
-			IAchievement achievementA = CreateFakeAchievement ("a123");
-			IAchievement achievementB = CreateFakeAchievement ("a123");
-
-			achieve.Register (achievementA);
-			achieve.Register (achievementB);
+			RegisterFakeAchievement ("a123", "kill");
+			RegisterFakeAchievement ("a123", "grind");
 		}
 
 		[Test]
 		[ExpectedException]
 		public void CannotRegisterNullOrEmptyIdIdAchievement ()
 		{
-			IAchievement achievement = CreateFakeAchievement (string.Empty);
-			achieve.Register (achievement);
+			RegisterFakeAchievement (string.Empty, "kill");
 		}
 
 		[Test]
 		public void IncreaseAchievementCountAccordingToItsType ()
 		{
-			var achievementA = CreateFakeAchievement ("a123", "grind");
-			var achievementB = CreateFakeAchievement ("b456", "kill");
-
-			achieve.Register (achievementA);
-			achieve.Register (achievementB);
+			IAchievement achievementA = RegisterFakeAchievement ("a123", "grind");
+			IAchievement achievementB = RegisterFakeAchievement ("b456", "kill");
 
 			achieve.OnEvent ("grind");
 			achieve.OnEvent ("kill");
@@ -56,17 +49,36 @@ namespace UnityTest
 			Assert.AreEqual (2, achievementB.Progress);
 		}
 
-		private IAchievement CreateFakeAchievement (string id)
+		[Test]
+		[Ignore]
+		public void TellsWhenOneAchievementIsUnlocked ()
 		{
-			var achievement = Substitute.For <IAchievement> ();
-			achievement.Id.Returns (id);
+			IAchievement achievement = RegisterFakeAchievement ("a123", "grind", 4, 5);
+			achieve.OnEvent ("grind");
+
+			Assert.IsTrue (achievement.IsUnlocked);
+		}
+
+		private IAchievement RegisterFakeAchievement (string id, string type)
+		{
+			return RegisterFakeAchievement (id, type, 0, int.MaxValue);
+		}
+
+		private IAchievement RegisterFakeAchievement (string id, string type, int currentProgress, int goal)
+		{
+			var achievement = CreateFakeAchievement (id, type, currentProgress, goal);
+			achieve.Register (achievement);
+			
 			return achievement;
 		}
 
-		private IAchievement CreateFakeAchievement (string id, string type)
+		private IAchievement CreateFakeAchievement (string id, string type, int currentProgress, int goal)
 		{
-			var achievement = CreateFakeAchievement (id);
+			var achievement = Substitute.For <IAchievement> ();
+			achievement.Id.Returns (id);
 			achievement.Type.Returns (type);
+			achievement.Progress.Returns (currentProgress);
+			achievement.Goal.Returns (goal);
 			return achievement;
 		}
 	}
