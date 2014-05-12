@@ -11,3 +11,5 @@
 /*.userprefs
 /*.pidb
 /*.booproj
+Assets/test-results/
+test-results/
