@@ -24,11 +24,8 @@ namespace UnityTest
 		[ExpectedException]
 		public void CannotRegisterDuplicatedAchievements ()
 		{
-			var achievementA = Substitute.For <IAchievement> ();
-			var achievementB = Substitute.For <IAchievement> ();
-
-			achievementA.Id.Returns ("id_one");
-			achievementB.Id.Returns ("id_one");
+			IAchievement achievementA = CreateFakeAchievement ("id_one");
+			IAchievement achievementB = CreateFakeAchievement ("id_one");
 
 			achieve.Register (achievementA);
 			achieve.Register (achievementB);
@@ -38,9 +35,7 @@ namespace UnityTest
 		[ExpectedException]
 		public void CannotRegisterNullOrEmptyIdIdAchievement ()
 		{
-			var achievement = Substitute.For <IAchievement> ();
-			
-			achievement.Id.Returns (string.Empty);
+			IAchievement achievement = CreateFakeAchievement (string.Empty);
 			achieve.Register (achievement);
 		}
 
@@ -51,6 +46,13 @@ namespace UnityTest
 //			var achievementA = Substitute.For <IAchievement> ();
 //			achievementA.Id.Returns ("id_one");
 			
+		}
+
+		private IAchievement CreateFakeAchievement (string id)
+		{
+			var achievement = Substitute.For <IAchievement> ();
+			achievement.Id.Returns (id);
+			return achievement;
 		}
 	}
 }
