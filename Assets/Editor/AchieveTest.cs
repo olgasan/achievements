@@ -33,5 +33,24 @@ namespace UnityTest
 			achieve.Register (achievementA);
 			achieve.Register (achievementB);
 		}
+
+		[Test]
+		[ExpectedException]
+		public void CannotRegisterNullOrEmptyIdIdAchievement ()
+		{
+			var achievement = Substitute.For <IAchievement> ();
+			
+			achievement.Id.Returns (string.Empty);
+			achieve.Register (achievement);
+		}
+
+		[Test]
+		[Ignore]
+		public void IncreaseAchievementCountAccordingToItsType ()
+		{
+//			var achievementA = Substitute.For <IAchievement> ();
+//			achievementA.Id.Returns ("id_one");
+			
+		}
 	}
 }

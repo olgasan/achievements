@@ -21,6 +21,10 @@ public class Achieve
 		{
 			throw new System.ArgumentException ("Cannot register null achievements");
 		}
+		else if (string.IsNullOrEmpty (achievement.Id))
+		{
+			throw new System.ArgumentException ("Cannot register achievements with null or empty Id");
+		}
 		else if (Find (achievement.Id) != null)
 		{
 			throw new System.ArgumentException ("Cannot register achievements with the same Id");
