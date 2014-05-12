@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NSubstitute;
 
 namespace UnityTest
 {
@@ -14,9 +15,23 @@ namespace UnityTest
 
 		[Test]
 		[ExpectedException]
-		public void CannotRegisterNullAchievement ()
+		public void CannotRegisterNullAchievements ()
 		{
 			achieve.Register (null);
+		}
+
+		[Test]
+		[ExpectedException]
+		public void CannotRegisterDuplicatedAchievements ()
+		{
+			var achievementA = Substitute.For <IAchievement> ();
+			var achievementB = Substitute.For <IAchievement> ();
+
+			achievementA.Id.Returns ("id_one");
+			achievementB.Id.Returns ("id_one");
+
+			achieve.Register (achievementA);
+			achieve.Register (achievementB);
 		}
 	}
 }
