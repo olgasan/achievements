@@ -2,6 +2,10 @@
 
 public class Achievement : IAchievement
 {
+	public event Action<IAchievement> Unlocked;
+
+	private int progress;
+
 	public string Id 
 	{ 
 		get;
@@ -16,8 +20,17 @@ public class Achievement : IAchievement
 
 	public int Progress
 	{ 
-		get;
-		set;
+		get { return progress; }
+		set
+		{
+			bool wasUnlocked = IsUnlocked;
+			progress = value;
+
+			if (!wasUnlocked && IsUnlocked && Unlocked != null)
+			{
+				Unlocked (this);
+			}
+		}
 	}
 
 	public int Goal
@@ -31,11 +44,25 @@ public class Achievement : IAchievement
 		get { return Progress >= Goal; }
 	}
 
-	public Achievement (string id, string type, int initial, int goal)
+	public IAchievementReward GameReward
+	{
+		get;
+		private set;
+	}
+
+	public IAchievementReward GamingNetworkReward
+	{
+		get;
+		private set;
+	}
+
+	public Achievement (string id, string type, int initial, int goal, IAchievementReward gameReward, IAchievementReward gamingNetworkReward)
 	{
 		Id = id;
 		Type = type;
 		Progress = initial;
 		Goal = goal;
+		GameReward = gameReward;
+		GamingNetworkReward = gamingNetworkReward;
 	}
 }
