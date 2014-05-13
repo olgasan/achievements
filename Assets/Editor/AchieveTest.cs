@@ -48,17 +48,7 @@ namespace UnityTest
 			Assert.AreEqual (1, achievementA.Progress);
 			Assert.AreEqual (2, achievementB.Progress);
 		}
-
-		[Test]
-		[Ignore]
-		public void TellsWhenOneAchievementIsUnlocked ()
-		{
-			IAchievement achievement = RegisterFakeAchievement ("a123", "grind", 4, 5);
-			achieve.OnEvent ("grind");
-
-			Assert.IsTrue (achievement.IsUnlocked);
-		}
-
+		
 		private IAchievement RegisterFakeAchievement (string id, string type)
 		{
 			return RegisterFakeAchievement (id, type, 0, int.MaxValue);
