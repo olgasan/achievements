@@ -68,7 +68,7 @@ namespace UnityTest
 			achievement.Id.Returns (id);
 			achievement.Type.Returns (type);
 			achievement.Progress.Returns (currentProgress);
-			achievement.NextGoal.Returns (goal);
+			achievement.Goal.Returns (goal);
 			return achievement;
 		}
 	}
