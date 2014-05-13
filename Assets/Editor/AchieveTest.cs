@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using NSubstitute;
 
 namespace UnityTest
@@ -68,7 +68,7 @@ namespace UnityTest
 			achievement.Id.Returns (id);
 			achievement.Type.Returns (type);
 			achievement.Progress.Returns (currentProgress);
-			achievement.Goal.Returns (goal);
+			achievement.NextGoal.Returns (goal);
 			return achievement;
 		}
 	}
