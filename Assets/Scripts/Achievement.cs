@@ -2,9 +2,6 @@
 
 public class Achievement : IAchievement
 {
-	private Action<IAchievement> unlockedDelegate;
-	private int progress;
-
 	public string Id 
 	{ 
 		get;
@@ -19,18 +16,8 @@ public class Achievement : IAchievement
 
 	public int Progress
 	{ 
-		get { return progress; }
-		set
-		{
-			bool wasUnlocked = IsUnlocked;
-
-			progress = value;
-
-			if (!wasUnlocked && IsUnlocked)
-			{
-				OnUnlocked ();
-			}
-		}
+		get;
+		set;
 	}
 
 	public int Goal
@@ -50,18 +37,5 @@ public class Achievement : IAchievement
 		Type = type;
 		Progress = initial;
 		Goal = goal;
-	}
-
-	public void SetUnlockedDelegate (Action<IAchievement> del) 
-	{
-		unlockedDelegate = del;
-	}
-
-	private void OnUnlocked ()
-	{
-		if (unlockedDelegate != null)
-		{
-			unlockedDelegate (this);
-		}
 	}
 }
