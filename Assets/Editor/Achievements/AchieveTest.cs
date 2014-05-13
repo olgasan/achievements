@@ -1,15 +1,18 @@
 using NUnit.Framework;
 using NSubstitute;
+using System;
 
 namespace UnityTest
 {
 	internal class AchieveTest 
 	{
 		private Achieve achieve;
+		private IAchievement unlockedAchievement;
 
 		[SetUp]
 		public void SetUp ()
 		{
+			unlockedAchievement = null;
 			achieve = new Achieve ();
 		}
 
@@ -48,7 +51,38 @@ namespace UnityTest
 			Assert.AreEqual (1, achievementA.Progress);
 			Assert.AreEqual (2, achievementB.Progress);
 		}
-		
+
+		[Test]
+		public void TriggerEventWhenAchievementIsUnlocked ()
+		{
+			IAchievement triggeredAchievement = null;
+			achieve.AchievementUnlocked += OnAchievementUnlocked;
+
+			var achievementA = RegisterFakeAchievement ("a123", "grind");
+			var achievementB = RegisterFakeAchievement ("b456", "kill");
+
+			triggeredAchievement = TriggerUnlockedEventForAchievement (ref achievementA);
+			Assert.AreEqual (triggeredAchievement, unlockedAchievement);
+
+			triggeredAchievement = TriggerUnlockedEventForAchievement (ref achievementB);
+			Assert.AreEqual (triggeredAchievement, achievementB);
+		}
+
+		private void OnAchievementUnlocked (IAchievement achievement)
+		{
+			unlockedAchievement = achievement;
+		}
+
+		private IAchievement TriggerUnlockedEventForAchievement (ref IAchievement achievement)
+		{
+			IAchievement triggered = null;
+
+			achievement.Unlocked += a => triggered = a;
+			achievement.Unlocked += Raise.Event<Action<IAchievement>>(achievement);
+
+			return triggered;
+		}
+
 		private IAchievement RegisterFakeAchievement (string id, string type)
 		{
 			return RegisterFakeAchievement (id, type, 0, int.MaxValue);

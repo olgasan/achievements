@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System;
 
 public class Achieve 
 {
+	public event Action<IAchievement> AchievementUnlocked;
 	private List<IAchievement> achievements;
 
 	public Achieve ()
@@ -13,6 +15,7 @@ public class Achieve
 	{
 		ValidateAchievement (achievement);
 		achievements.Add (achievement);
+		achievement.Unlocked += OnAchievementUnlocked;
 	}
 
 	public void OnEvent (string eventType)
@@ -23,6 +26,14 @@ public class Achieve
 			{
 				achievement.Progress ++;
 			}
+		}
+	}
+
+	private void OnAchievementUnlocked (IAchievement achievement)
+	{
+		if (AchievementUnlocked != null)
+		{
+			AchievementUnlocked (achievement);
 		}
 	}
 
