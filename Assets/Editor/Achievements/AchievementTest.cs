@@ -38,6 +38,17 @@ namespace UnityTest
 			Assert.AreEqual (gamingNetworkReward.Amount, unlockedEventAchivement.GamingNetworkReward.Amount);
 		}
 
+		[Test]
+		[ExpectedException]
+		public void DoNoIncreaseWhenIsUnlocked ()
+		{
+			achievement = new Achievement ("a123", "kill", 5, 5, gameReward, gamingNetworkReward);
+			Assert.IsTrue (achievement.IsUnlocked);
+
+			achievement.Progress++;
+			Assert.AreEqual (5, achievement.Progress);
+		}
+
 		private void OnUnlocked (IAchievement achievement)
 		{
 			unlockedEventAchivement = achievement;

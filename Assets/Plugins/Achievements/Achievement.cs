@@ -23,12 +23,19 @@ public class Achievement : IAchievement
 		get { return progress; }
 		set
 		{
-			bool wasUnlocked = IsUnlocked;
-			progress = value;
-
-			if (!wasUnlocked && IsUnlocked && Unlocked != null)
+			if (!IsUnlocked)
 			{
-				Unlocked (this);
+				bool wasUnlocked = IsUnlocked;
+				progress = value;
+				
+				if (!wasUnlocked && IsUnlocked && Unlocked != null)
+				{
+					Unlocked (this);
+				}
+			}
+			else
+			{
+				throw new InvalidOperationException ("Cannot increase an already unlocked achievement");
 			}
 		}
 	}
@@ -41,7 +48,7 @@ public class Achievement : IAchievement
 	
 	public bool IsUnlocked
 	{ 
-		get { return Progress >= Goal; }
+		get { return Progress == Goal; }
 	}
 
 	public IAchievementReward GameReward
@@ -60,7 +67,7 @@ public class Achievement : IAchievement
 	{
 		Id = id;
 		Type = type;
-		Progress = initial;
+		progress = initial;
 		Goal = goal;
 		GameReward = gameReward;
 		GamingNetworkReward = gamingNetworkReward;

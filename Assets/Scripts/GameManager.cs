@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 		listener = Locator.Instance.GetService <EventListenerForAchievements> ();
 		achieve = Locator.Instance.GetService <Achieve> ();
 		menu = new OnScreenDebugMenu ();
+
+		Invoke ("OnGameLoaded", 3F);
 	}
 
 	private void OnGameLoaded ()
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
 
 		achieve.Register (a1);
 		achieve.Register (a2);
+
+		Debug.Log ("Achievements registered");
 	}
 
 	private void OnGUI ()
