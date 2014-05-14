@@ -68,6 +68,13 @@ namespace UnityTest
 			Assert.AreEqual (triggeredAchievement, achievementB);
 		}
 
+		[Test]
+		[ExpectedException]
+		public void WithoutAchievementsEventsCannotBeCalled ()
+		{
+			achieve.OnEvent ("kill");
+		}
+
 		private void OnAchievementUnlocked (IAchievement achievement)
 		{
 			unlockedAchievement = achievement;

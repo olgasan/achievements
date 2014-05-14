@@ -11,6 +11,7 @@ public class CommonPlugin
 		string[] assetPaths = new string[]
 		{
 			"Assets/Editor/Common",
+			"Assets/Plugins/Common",
 		};
 		
 		packager.Pack (assetPaths, "/common-core.unitypackage");

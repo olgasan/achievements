@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public class Achieve 
 {
@@ -20,11 +21,19 @@ public class Achieve
 
 	public void OnEvent (string eventType)
 	{
-		foreach (IAchievement achievement in achievements)
+		if (achievements.Count == 0)
 		{
-			if (achievement.Type == eventType)
+			throw new System.OperationCanceledException ("Trigger an event has no effects if there are no achievements registered.");
+		}
+		else
+		{
+			foreach (IAchievement achievement in achievements)
 			{
-				achievement.Progress ++;
+				if (achievement.Type == eventType)
+				{
+					Debug.Log (achievement.Progress + " of " + achievement.Goal);
+					achievement.Progress ++;
+				}
 			}
 		}
 	}
