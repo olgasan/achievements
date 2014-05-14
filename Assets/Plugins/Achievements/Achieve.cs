@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System;
-using UnityEngine;
 
 public class Achieve 
 {
@@ -31,7 +30,6 @@ public class Achieve
 			{
 				if (achievement.Type == eventType)
 				{
-					Debug.Log (achievement.Progress + " of " + achievement.Goal);
 					achievement.Progress ++;
 				}
 			}
