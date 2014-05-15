@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using NSubstitute;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ internal class AchievementFaker
 	public IGamingNetworkAdapter CreateFakeGamingNetworkAdapter ()
 	{
 		IGamingNetworkAdapter adapter = Substitute.For <IGamingNetworkAdapter> ();
-		adapter.Achivements.Returns (new List<IAchievement> ());
+		adapter.Achievements.Returns (new List<IAchievement> ());
 		return adapter;
 	}
 }

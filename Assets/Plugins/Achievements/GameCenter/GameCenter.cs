@@ -1,33 +1,35 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections.Generic;
 
-public class GameCenter
+public class GameCenter : IGamingNetworkAdapter
 {
-	public Action<bool> OnSucceedInit
-	{
-		set;
-		private get;
+	public List<IAchievement> Achievements 
+	{ 
+		get; 
+		private set;
 	}
 
 	public GameCenter ()
 	{
+		Achievements = new List<IAchievement> ();
 	}
 
 	public void Init ()
 	{
-		Social.localUser.Authenticate (success => {
-			if (success)
-			{
-				Debug.Log ("Authentication successful");
+		Social.localUser.Authenticate (OnAuthenticate);
+	}
 
-				string userInfo = "Username: " + Social.localUser.userName + 
-					"\nUser ID: " + Social.localUser.id + 
-					"\nIsUnderage: " + Social.localUser.underage;
-
-				Debug.Log (userInfo);
-			}
-			else
-				Debug.Log ("Authentication failed");
-		});
+	private void OnAuthenticate (bool success)
+	{
+		if (success)
+		{
+			Debug.Log ("Authentication successful");
+			string userInfo = string.Format ("Username: {0}\nUser ID: {1}", Social.localUser.userName, Social.localUser.id);
+			Debug.Log (userInfo);
+		}
+		else
+		{
+			Debug.Log ("Authentication failed");
+		}
 	}
 }

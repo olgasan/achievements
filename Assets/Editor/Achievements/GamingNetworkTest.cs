@@ -20,5 +20,16 @@ namespace UnityTest
 
 			Assert.IsTrue (network.Achievements.Contains (registered));
 		}
+
+		[Test]
+		public void InitializeAdapter ()
+		{
+			Achieve achieve = new Achieve ();
+			IGamingNetworkAdapter adapter = faker.CreateFakeGamingNetworkAdapter ();
+			new GamingNetwork (achieve, adapter);
+
+			//Assert Init was called
+			adapter.Received().Init ();
+		}
 	}
 }

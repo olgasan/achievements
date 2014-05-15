@@ -2,5 +2,6 @@
 
 public interface IGamingNetworkAdapter
 {
-	List<IAchievement> Achivements { get; }
+	List<IAchievement> Achievements { get; }
+	void Init ();
 }
