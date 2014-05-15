@@ -15,9 +15,13 @@ public class GamingNetwork
 		this.achieve = achieve;
 
 		this.adapter = adapter;
-		this.adapter.Init ();
 
 		SetUpListenters ();
+	}
+
+	public void Init ()
+	{
+		this.adapter.Init ();
 	}
 
 	private void SetUpListenters ()

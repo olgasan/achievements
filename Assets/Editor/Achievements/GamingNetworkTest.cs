@@ -26,7 +26,8 @@ namespace UnityTest
 		{
 			Achieve achieve = new Achieve ();
 			IGamingNetworkAdapter adapter = faker.CreateFakeGamingNetworkAdapter ();
-			new GamingNetwork (achieve, adapter);
+			GamingNetwork network = new GamingNetwork (achieve, adapter);
+			network.Init ();
 
 			//Assert Init was called
 			adapter.Received().Init ();
