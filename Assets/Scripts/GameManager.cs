@@ -9,9 +9,13 @@ public class GameManager : MonoBehaviour
 
 	private void Awake ()
 	{
+		menu = new OnScreenDebugMenu ();
+		
 		listener = Locator.Instance.GetService <EventListenerForAchievements> ();
 		achieve = Locator.Instance.GetService <Achieve> ();
-		menu = new OnScreenDebugMenu ();
+
+		GameCenterAdapter gc = new GameCenterAdapter ();
+		new GamingNetwork (achieve, gc);
 
 		Invoke ("OnGameLoaded", 3F);
 	}

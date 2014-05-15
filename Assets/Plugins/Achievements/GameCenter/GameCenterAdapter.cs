@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GameCenter : IGamingNetworkAdapter
+public class GameCenterAdapter : IGamingNetworkAdapter
 {
 	public List<IAchievement> Achievements 
 	{ 
@@ -9,7 +9,7 @@ public class GameCenter : IGamingNetworkAdapter
 		private set;
 	}
 
-	public GameCenter ()
+	public GameCenterAdapter ()
 	{
 		Achievements = new List<IAchievement> ();
 	}
