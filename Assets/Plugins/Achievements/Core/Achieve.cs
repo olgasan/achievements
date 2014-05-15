@@ -5,6 +5,7 @@ public class Achieve
 {
 	public event Action<IAchievement> AchievementUnlocked;
 	public event Action<IAchievement> AchievementRegistered;
+	public event Action<IAchievement, int> AchievementProgressIncreased;
 
 	private List<IAchievement> achievements;
 
@@ -39,7 +40,7 @@ public class Achieve
 			{
 				if (achievement.Type == eventType)
 				{
-					achievement.Progress ++;
+					IncreaseAchievementProgress (achievement, 1);
 				}
 			}
 		}
@@ -50,6 +51,16 @@ public class Achieve
 		if (AchievementUnlocked != null)
 		{
 			AchievementUnlocked (achievement);
+		}
+	}
+
+	private void IncreaseAchievementProgress (IAchievement achievement, int increaseAmount)
+	{
+		achievement.Progress += increaseAmount;
+
+		if (AchievementProgressIncreased != null)
+		{
+			AchievementProgressIncreased (achievement, increaseAmount);
 		}
 	}
 

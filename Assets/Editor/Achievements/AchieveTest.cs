@@ -7,14 +7,10 @@ namespace UnityTest
 	internal class AchieveTest 
 	{
 		private Achieve achieve;
-		private IAchievement unlockedAchievement;
-		private IAchievement registeredAchievement;
 
 		[SetUp]
 		public void SetUp ()
 		{
-			unlockedAchievement = null;
-			registeredAchievement = null;
 			achieve = new Achieve ();
 		}
 
@@ -58,12 +54,16 @@ namespace UnityTest
 		public void NotifyWhenAchievementIsUnlocked ()
 		{
 			IAchievement triggeredAchievement = null;
-			achieve.AchievementUnlocked += OnAchievementUnlocked;
+			IAchievement unlockedAchievement = null;
+			achieve.AchievementUnlocked += (IAchievement a) =>
+			{
+				unlockedAchievement = a;
+			};
 
 			var achievement = RegisterFakeAchievement ("a123", "grind");
 
 			triggeredAchievement = TriggerUnlockedEventForAchievement (ref achievement);
-			Assert.AreEqual (triggeredAchievement, unlockedAchievement);
+			Assert.AreSame (triggeredAchievement, unlockedAchievement);
 		}
 
 		[Test]
@@ -76,20 +76,33 @@ namespace UnityTest
 		[Test]
 		public void NotifyWhenAchievementIsRegistered ()
 		{
-			achieve.AchievementRegistered += OnAchievementRegistered;
+			IAchievement registeredAchievement = null;
+			achieve.AchievementRegistered += (IAchievement a) =>
+			{
+				registeredAchievement = a;
+			};
+
 			IAchievement achievement = RegisterFakeAchievement ("a123", "grind");
-			
-			Assert.AreEqual (achievement, registeredAchievement);
+			Assert.AreSame (achievement, registeredAchievement);
 		}
 
-		private void OnAchievementUnlocked (IAchievement achievement)
+		[Test]
+		public void NotifyWhenAchievementProgressIncreases ()
 		{
-			unlockedAchievement = achievement;
-		}
+			IAchievement achievement = RegisterFakeAchievement ("a123", "kill", 1, 10);
 
-		private void OnAchievementRegistered (IAchievement achievement)
-		{
-			registeredAchievement = achievement;
+			IAchievement increasedAchievement = null;
+			int increasedAmount = 0;
+			achieve.AchievementProgressIncreased += (IAchievement a, int b) =>
+			{
+				increasedAchievement = a;
+				increasedAmount = b;
+			};
+
+			achieve.OnEvent ("kill");
+
+			Assert.AreSame (achievement, increasedAchievement);
+			Assert.AreEqual (1, increasedAmount);
 		}
 
 		private IAchievement TriggerUnlockedEventForAchievement (ref IAchievement achievement)
