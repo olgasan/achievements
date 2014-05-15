@@ -4,6 +4,8 @@ using System;
 public class Achieve 
 {
 	public event Action<IAchievement> AchievementUnlocked;
+	public event Action<IAchievement> AchievementRegistered;
+
 	private List<IAchievement> achievements;
 
 	public Achieve ()
@@ -13,9 +15,16 @@ public class Achieve
 
 	public void Register (IAchievement achievement)
 	{
-		ValidateAchievement (achievement);
-		achievements.Add (achievement);
-		achievement.Unlocked += OnAchievementUnlocked;
+		if (ValidateAchievement (achievement))
+		{
+			achievements.Add (achievement);
+			achievement.Unlocked += OnAchievementUnlocked;
+
+			if (AchievementRegistered != null)
+			{
+				AchievementRegistered (achievement);
+			}
+		}
 	}
 
 	public void OnEvent (string eventType)
@@ -44,20 +53,27 @@ public class Achieve
 		}
 	}
 
-	private void ValidateAchievement (IAchievement achievement)
+	private bool ValidateAchievement (IAchievement achievement)
 	{
+		bool isValid = true;
+
 		if (achievement == null)
 		{
+			isValid = false;
 			throw new System.ArgumentException ("Cannot register null achievements");
 		}
 		else if (string.IsNullOrEmpty (achievement.Id))
 		{
+			isValid = false;
 			throw new System.ArgumentException ("Cannot register achievements with null or empty Id");
 		}
 		else if (Find (achievement.Id) != null)
 		{
+			isValid = false;
 			throw new System.ArgumentException ("Cannot register achievements with the same Id");
 		}
+
+		return isValid;
 	}
 
 	IAchievement Find (string id)

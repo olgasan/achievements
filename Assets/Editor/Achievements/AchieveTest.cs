@@ -8,11 +8,13 @@ namespace UnityTest
 	{
 		private Achieve achieve;
 		private IAchievement unlockedAchievement;
+		private IAchievement registeredAchievement;
 
 		[SetUp]
 		public void SetUp ()
 		{
 			unlockedAchievement = null;
+			registeredAchievement = null;
 			achieve = new Achieve ();
 		}
 
@@ -53,19 +55,15 @@ namespace UnityTest
 		}
 
 		[Test]
-		public void TriggerEventWhenAchievementIsUnlocked ()
+		public void NotifyWhenAchievementIsUnlocked ()
 		{
 			IAchievement triggeredAchievement = null;
 			achieve.AchievementUnlocked += OnAchievementUnlocked;
 
-			var achievementA = RegisterFakeAchievement ("a123", "grind");
-			var achievementB = RegisterFakeAchievement ("b456", "kill");
+			var achievement = RegisterFakeAchievement ("a123", "grind");
 
-			triggeredAchievement = TriggerUnlockedEventForAchievement (ref achievementA);
+			triggeredAchievement = TriggerUnlockedEventForAchievement (ref achievement);
 			Assert.AreEqual (triggeredAchievement, unlockedAchievement);
-
-			triggeredAchievement = TriggerUnlockedEventForAchievement (ref achievementB);
-			Assert.AreEqual (triggeredAchievement, achievementB);
 		}
 
 		[Test]
@@ -75,9 +73,23 @@ namespace UnityTest
 			achieve.OnEvent ("kill");
 		}
 
+		[Test]
+		public void NotifyWhenAchievementIsRegistered ()
+		{
+			achieve.AchievementRegistered += OnAchievementRegistered;
+			IAchievement achievement = RegisterFakeAchievement ("a123", "grind");
+			
+			Assert.AreEqual (achievement, registeredAchievement);
+		}
+
 		private void OnAchievementUnlocked (IAchievement achievement)
 		{
 			unlockedAchievement = achievement;
+		}
+
+		private void OnAchievementRegistered (IAchievement achievement)
+		{
+			registeredAchievement = achievement;
 		}
 
 		private IAchievement TriggerUnlockedEventForAchievement (ref IAchievement achievement)
