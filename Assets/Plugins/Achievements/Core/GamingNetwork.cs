@@ -3,17 +3,17 @@
 public class GamingNetwork
 {
 	private Achieve achieve;
+	private IGamingNetworkAdapter adapter;
 
 	public List<IAchievement> Achievements 
 	{
-		get;
-		private set;
+		get { return adapter.Achivements; }
 	}
 
-	public GamingNetwork (Achieve achieve)
+	public GamingNetwork (Achieve achieve, IGamingNetworkAdapter adapter)
 	{
-		Achievements = new List<IAchievement> ();
 		this.achieve = achieve;
+		this.adapter = adapter;
 
 		SetUpListenters ();
 	}
