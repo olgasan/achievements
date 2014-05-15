@@ -122,19 +122,10 @@ namespace UnityTest
 
 		private IAchievement RegisterFakeAchievement (string id, string type, int currentProgress, int goal)
 		{
-			var achievement = CreateFakeAchievement (id, type, currentProgress, goal);
+			AchievementFaker faker = new AchievementFaker ();
+			var achievement = faker.CreateFakeAchievement (id, type, currentProgress, goal);
 			achieve.Register (achievement);
 			
-			return achievement;
-		}
-
-		private IAchievement CreateFakeAchievement (string id, string type, int currentProgress, int goal)
-		{
-			var achievement = Substitute.For <IAchievement> ();
-			achievement.Id.Returns (id);
-			achievement.Type.Returns (type);
-			achievement.Progress.Returns (currentProgress);
-			achievement.Goal.Returns (goal);
 			return achievement;
 		}
 	}
