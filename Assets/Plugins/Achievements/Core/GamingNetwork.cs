@@ -32,6 +32,7 @@ public class GamingNetwork
 	private void OnAchievementRegistered (IAchievement achievement)
 	{
 		Achievements.Add (achievement);
+		adapter.Register (achievement);
 	}
 
 	private void OnAchievementUnlocked (IAchievement achievement)

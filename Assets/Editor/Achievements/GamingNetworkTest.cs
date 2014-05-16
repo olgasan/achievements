@@ -19,6 +19,7 @@ namespace UnityTest
 			achieve.Register (registered);
 
 			Assert.IsTrue (network.Achievements.Contains (registered));
+			adapter.Received ().Register (Arg.Any<IAchievement>());
 		}
 
 		[Test]

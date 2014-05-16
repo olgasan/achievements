@@ -24,6 +24,11 @@ public class GameCenterAdapter : IGamingNetworkAdapter
 		Debug.Log ("achievement unlocked " + achievement.Id);
 	}
 
+	public void Register (IAchievement achievement)
+	{
+		//..
+	}
+
 	private void OnAuthenticate (bool success)
 	{
 		if (success)
