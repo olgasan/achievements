@@ -13,7 +13,6 @@ public class GamingNetwork
 	public GamingNetwork (Achieve achieve, IGamingNetworkAdapter adapter)
 	{
 		this.achieve = achieve;
-
 		this.adapter = adapter;
 
 		SetUpListenters ();
@@ -23,14 +22,20 @@ public class GamingNetwork
 	{
 		this.adapter.Init ();
 	}
-
+	
 	private void SetUpListenters ()
 	{
 		achieve.AchievementRegistered += OnAchievementRegistered;
+		achieve.AchievementUnlocked += OnAchievementUnlocked;
 	}
 
-	private void OnAchievementRegistered (IAchievement newAchievement)
+	private void OnAchievementRegistered (IAchievement achievement)
 	{
-		Achievements.Add (newAchievement);
+		Achievements.Add (achievement);
+	}
+
+	private void OnAchievementUnlocked (IAchievement achievement)
+	{
+		adapter.Unlocked (achievement);
 	}
 }

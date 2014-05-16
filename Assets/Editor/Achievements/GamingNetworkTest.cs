@@ -22,6 +22,22 @@ namespace UnityTest
 		}
 
 		[Test]
+		[Ignore]
+		public void NotifyNetworkWhenAchievementIsUnlocked ()
+		{
+			Achieve achieve = new Achieve ();
+			IGamingNetworkAdapter adapter = faker.CreateFakeGamingNetworkAdapter ();
+			new GamingNetwork (achieve, adapter);
+			
+			IAchievement registered = faker.CreateFakeAchievement ("a123", "kill", 0, 1);
+			achieve.Register (registered);
+			achieve.OnEvent ("kill");
+
+			//Assert Unlocked was called
+			adapter.Received ().Unlocked (Arg.Any<IAchievement>());
+		}
+
+		[Test]
 		public void InitializeAdapter ()
 		{
 			Achieve achieve = new Achieve ();
@@ -30,7 +46,7 @@ namespace UnityTest
 			network.Init ();
 
 			//Assert Init was called
-			adapter.Received().Init ();
+			adapter.Received ().Init ();
 		}
 	}
 }

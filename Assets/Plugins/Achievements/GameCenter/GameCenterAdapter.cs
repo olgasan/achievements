@@ -19,6 +19,11 @@ public class GameCenterAdapter : IGamingNetworkAdapter
 		Social.localUser.Authenticate (OnAuthenticate);
 	}
 
+	public void Unlocked (IAchievement achievement)
+	{
+		Debug.Log ("achievement unlocked " + achievement.Id);
+	}
+
 	private void OnAuthenticate (bool success)
 	{
 		if (success)
