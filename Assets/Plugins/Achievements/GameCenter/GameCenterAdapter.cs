@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Brainz;
+using UnityEngine.SocialPlatforms;
 
-public class GameCenterAdapter : IGamingNetworkAdapter
+public class GameCenterAdapter : Brainz.IGamingNetworkAdapter
 {
-	public List<IAchievement> Achievements 
+	public List<Brainz.IAchievement> Achievements 
 	{ 
 		get; 
 		private set;
@@ -12,7 +12,7 @@ public class GameCenterAdapter : IGamingNetworkAdapter
 
 	public GameCenterAdapter ()
 	{
-		Achievements = new List<IAchievement> ();
+		Achievements = new List<Brainz.IAchievement> ();
 	}
 
 	public void Init ()
@@ -25,14 +25,25 @@ public class GameCenterAdapter : IGamingNetworkAdapter
 		Social.ShowAchievementsUI ();
 	}
 
-	public void Unlocked (IAchievement achievement)
+	public void Unlocked (Brainz.IAchievement achievement)
 	{
 		Debug.Log ("achievement unlocked " + achievement.Id);
 	}
 
-	public void Register (IAchievement achievement)
+	public void Register (Brainz.IAchievement achievement)
 	{
-		//..
+		IAchievement a = Social.CreateAchievement();
+		a.id = achievement.Id;
+		a.percentCompleted = ((double)achievement.Progress * 100) / (double)achievement.Goal;
+		a.ReportProgress(OnRegistered);
+	}
+
+	private void OnRegistered (bool result)
+	{
+		if (result)
+			Debug.Log ("Successfully reported progress");
+		else
+			Debug.Log ("Failed to report progress");
 	}
 
 	private void OnAuthenticate (bool success)
