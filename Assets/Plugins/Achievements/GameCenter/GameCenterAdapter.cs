@@ -19,6 +19,11 @@ public class GameCenterAdapter : IGamingNetworkAdapter
 		Social.localUser.Authenticate (OnAuthenticate);
 	}
 
+	public void ShowUI ()
+	{
+		Social.ShowAchievementsUI ();
+	}
+
 	public void Unlocked (IAchievement achievement)
 	{
 		Debug.Log ("achievement unlocked " + achievement.Id);

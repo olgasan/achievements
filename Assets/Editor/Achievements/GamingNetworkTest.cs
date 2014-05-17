@@ -49,5 +49,12 @@ namespace UnityTest
 			//Assert Init was called
 			adapter.Received ().Init ();
 		}
+
+		[Test]
+		public void DisplayAdapterAchievements ()
+		{
+			network.ShowUI ();
+			adapter.Received ().ShowUI ();
+		}
 	}
 }

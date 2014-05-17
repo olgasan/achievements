@@ -22,6 +22,11 @@ public class GamingNetwork
 	{
 		this.adapter.Init ();
 	}
+
+	public void ShowUI ()
+	{
+		adapter.ShowUI ();
+	}
 	
 	private void SetUpListenters ()
 	{
