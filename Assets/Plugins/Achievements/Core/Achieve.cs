@@ -1,94 +1,97 @@
 using System.Collections.Generic;
 using System;
 
-public class Achieve 
+namespace Brainz
 {
-	public event Action<IAchievement> AchievementUnlocked;
-	public event Action<IAchievement> AchievementRegistered;
-	public event Action<IAchievement, int> AchievementProgressIncreased;
-
-	private List<IAchievement> achievements;
-
-	public Achieve ()
+	public class Achieve 
 	{
-		achievements = new List<IAchievement> ();
-	}
-
-	public void Register (IAchievement achievement)
-	{
-		if (ValidateAchievement (achievement))
+		public event Action<IAchievement> AchievementUnlocked;
+		public event Action<IAchievement> AchievementRegistered;
+		public event Action<IAchievement, int> AchievementProgressIncreased;
+		
+		private List<IAchievement> achievements;
+		
+		public Achieve ()
 		{
-			achievements.Add (achievement);
-			achievement.Unlocked += OnAchievementUnlocked;
-
-			if (AchievementRegistered != null)
-			{
-				AchievementRegistered (achievement);
-			}
+			achievements = new List<IAchievement> ();
 		}
-	}
-
-	public void OnEvent (string eventType)
-	{
-		if (achievements.Count == 0)
+		
+		public void Register (IAchievement achievement)
 		{
-			throw new System.OperationCanceledException ("Trigger an event has no effects if there are no achievements registered.");
-		}
-		else
-		{
-			foreach (IAchievement achievement in achievements)
+			if (ValidateAchievement (achievement))
 			{
-				if (achievement.Type == eventType)
+				achievements.Add (achievement);
+				achievement.Unlocked += OnAchievementUnlocked;
+				
+				if (AchievementRegistered != null)
 				{
-					IncreaseAchievementProgress (achievement, 1);
+					AchievementRegistered (achievement);
 				}
 			}
 		}
-	}
-
-	private void OnAchievementUnlocked (IAchievement achievement)
-	{
-		if (AchievementUnlocked != null)
+		
+		public void OnEvent (string eventType)
 		{
-			AchievementUnlocked (achievement);
+			if (achievements.Count == 0)
+			{
+				throw new System.OperationCanceledException ("Trigger an event has no effects if there are no achievements registered.");
+			}
+			else
+			{
+				foreach (IAchievement achievement in achievements)
+				{
+					if (achievement.Type == eventType)
+					{
+						IncreaseAchievementProgress (achievement, 1);
+					}
+				}
+			}
 		}
-	}
-
-	private void IncreaseAchievementProgress (IAchievement achievement, int increaseAmount)
-	{
-		achievement.Progress += increaseAmount;
-
-		if (AchievementProgressIncreased != null)
+		
+		private void OnAchievementUnlocked (IAchievement achievement)
 		{
-			AchievementProgressIncreased (achievement, increaseAmount);
+			if (AchievementUnlocked != null)
+			{
+				AchievementUnlocked (achievement);
+			}
 		}
-	}
-
-	private bool ValidateAchievement (IAchievement achievement)
-	{
-		bool isValid = true;
-
-		if (achievement == null)
+		
+		private void IncreaseAchievementProgress (IAchievement achievement, int increaseAmount)
 		{
-			isValid = false;
-			throw new System.ArgumentException ("Cannot register null achievements");
+			achievement.Progress += increaseAmount;
+			
+			if (AchievementProgressIncreased != null)
+			{
+				AchievementProgressIncreased (achievement, increaseAmount);
+			}
 		}
-		else if (string.IsNullOrEmpty (achievement.Id))
+		
+		private bool ValidateAchievement (IAchievement achievement)
 		{
-			isValid = false;
-			throw new System.ArgumentException ("Cannot register achievements with null or empty Id");
+			bool isValid = true;
+			
+			if (achievement == null)
+			{
+				isValid = false;
+				throw new System.ArgumentException ("Cannot register null achievements");
+			}
+			else if (string.IsNullOrEmpty (achievement.Id))
+			{
+				isValid = false;
+				throw new System.ArgumentException ("Cannot register achievements with null or empty Id");
+			}
+			else if (Find (achievement.Id) != null)
+			{
+				isValid = false;
+				throw new System.ArgumentException ("Cannot register achievements with the same Id");
+			}
+			
+			return isValid;
 		}
-		else if (Find (achievement.Id) != null)
+		
+		IAchievement Find (string id)
 		{
-			isValid = false;
-			throw new System.ArgumentException ("Cannot register achievements with the same Id");
+			return achievements.Find (a => a.Id == id);
 		}
-
-		return isValid;
-	}
-
-	IAchievement Find (string id)
-	{
-		return achievements.Find (a => a.Id == id);
 	}
 }

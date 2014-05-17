@@ -1,4 +1,6 @@
-﻿public class Locator : ServiceLocator 
+﻿using Brainz;
+
+public class Locator : ServiceLocator 
 {
 	private static IServiceLocator instance;
 	private EventListenerForAchievements eventListenerForAchievements;

@@ -1,5 +1,9 @@
-﻿public interface IAchievementReward
+﻿namespace Brainz
 {
-	AchievementRewardType Type { get; } 
-	int Amount { get; }
+	public interface IAchievementReward
+	{
+		AchievementRewardType Type { get; } 
+		int Amount { get; }
+	}
+	
 }

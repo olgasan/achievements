@@ -1,4 +1,6 @@
-﻿public class EventListenerForAchievements
+﻿using Brainz;
+
+public class EventListenerForAchievements
 {
 	private Achieve achieve;
 

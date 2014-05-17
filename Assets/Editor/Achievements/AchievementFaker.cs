@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using NSubstitute;
 using System.Collections.Generic;
+using Brainz;
 
 internal class AchievementFaker
 {

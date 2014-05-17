@@ -1,20 +1,24 @@
-﻿public class AchievementReward : IAchievementReward
+﻿namespace Brainz
 {
-	public AchievementRewardType Type 
-	{ 
-		get; 
-		private set;
-	}
-
-	public int Amount 
-	{ 
-		get; 
-		private set;
-	}
-
-	public AchievementReward (AchievementRewardType type, int amount)
+	public class AchievementReward : IAchievementReward
 	{
-		Type = type;
-		Amount = amount;
+		public AchievementRewardType Type 
+		{ 
+			get; 
+			private set;
+		}
+		
+		public int Amount 
+		{ 
+			get; 
+			private set;
+		}
+		
+		public AchievementReward (AchievementRewardType type, int amount)
+		{
+			Type = type;
+			Amount = amount;
+		}
 	}
+	
 }

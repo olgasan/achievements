@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using NSubstitute;
+using Brainz;
 
 namespace UnityTest
 {

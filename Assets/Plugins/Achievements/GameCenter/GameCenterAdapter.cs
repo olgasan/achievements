@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Brainz;
 
 public class GameCenterAdapter : IGamingNetworkAdapter
 {

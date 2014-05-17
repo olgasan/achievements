@@ -1,5 +1,8 @@
-public enum AchievementRewardType
+namespace Brainz
 {
-	Game,
-	GamingNetwork,
+	public enum AchievementRewardType
+	{
+		Game,
+		GamingNetwork,
+	}
 }
