@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 public class GameCenterAdapter : Brainz.IGamingNetworkAdapter
 {
@@ -28,6 +29,13 @@ public class GameCenterAdapter : Brainz.IGamingNetworkAdapter
 	public void Unlocked (Brainz.IAchievement achievement)
 	{
 		Debug.Log ("achievement unlocked " + achievement.Id);
+	}
+
+	public void ResetAllAchievements ()
+	{
+		GameCenterPlatform.ResetAllAchievements( (resetResult) => {
+			Debug.Log( (resetResult) ? "Reset done." : "Reset failed." );
+		});
 	}
 
 	public void Progressed (Brainz.IAchievement achievement)

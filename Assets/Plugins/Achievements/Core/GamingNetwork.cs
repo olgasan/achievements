@@ -29,6 +29,11 @@ namespace Brainz
 		{
 			adapter.ShowUI ();
 		}
+
+		public void ResetProgress ()
+		{
+			adapter.ResetAllAchievements ();
+		}
 		
 		private void SetUpListenters ()
 		{

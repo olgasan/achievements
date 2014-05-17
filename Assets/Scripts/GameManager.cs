@@ -30,25 +30,21 @@ public class GameManager : MonoBehaviour
 
 		IAchievement a1 = new Achievement ("motd_breakAFew1", "kill", 2, 10, a1Reward, a1Reward);
 		IAchievement a2 = new Achievement ("motd_breakAFew2", "grind", 0, 15, a2Reward, a2Reward);
-		IAchievement a3 = new Achievement ("motd_breakAFew3", "kill", 0, 20, a1Reward, a1Reward);
 
 		achieve.Register (a1);
 		achieve.Register (a2);
-		achieve.Register (a3);
-
-		Debug.Log ("Achievements registered");
 	}
 
 	private void OnGUI ()
 	{
 		menu.Reset ();
 
-		if (menu.DrawButton ("I'm kill"))
+		if (menu.DrawButton ("A"))
 		{
 			listener.OnKill ();
 		}
 
-		if (menu.DrawButton ("I'm grind"))
+		if (menu.DrawButton ("B"))
 		{
 			listener.OnGrind ();
 		}
@@ -56,6 +52,11 @@ public class GameManager : MonoBehaviour
 		if (menu.DrawButton ("Show UI"))
 		{
 			gamingNetwork.ShowUI ();
+		}
+
+		if (menu.DrawButton ("Reset"))
+		{
+			gamingNetwork.ResetProgress ();
 		}
 	}
 }

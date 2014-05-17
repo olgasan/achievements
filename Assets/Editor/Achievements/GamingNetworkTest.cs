@@ -67,5 +67,12 @@ namespace UnityTest
 			network.ShowUI ();
 			adapter.Received ().ShowUI ();
 		}
+		
+		[Test]
+		public void ResetProgress ()
+		{
+			network.ResetProgress ();
+			adapter.Received ().ResetAllAchievements ();
+		}
 	}
 }
