@@ -34,6 +34,7 @@ namespace Brainz
 		{
 			achieve.AchievementRegistered += OnAchievementRegistered;
 			achieve.AchievementUnlocked += OnAchievementUnlocked;
+			achieve.AchievementProgressIncreased += OnAchievementProgressIncreased;
 		}
 		
 		private void OnAchievementRegistered (IAchievement achievement)
@@ -42,9 +43,14 @@ namespace Brainz
 			adapter.Register (achievement);
 		}
 		
-		private void OnAchievementUnlocked (IAchievement achievement)
+		public void OnAchievementUnlocked (IAchievement achievement)
 		{
 			adapter.Unlocked (achievement);
+		}
+
+		public void OnAchievementProgressIncreased (IAchievement registered, int amount)
+		{
+			adapter.Progressed (registered);
 		}
 	}
 }

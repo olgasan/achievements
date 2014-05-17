@@ -21,22 +21,22 @@ namespace UnityTest
 		}
 		
 		[Test]
-		public void NotifyNetworkWhenAchievementIsRegistered ()
+		public void RegisterAchievementToAdapter ()
 		{
 			IAchievement registered = faker.CreateFakeAchievement ("a123", "kill", 1, 100);
 			achieve.Register (registered);
 			
 			Assert.IsTrue (network.Achievements.Contains (registered));
+
+			//Assert Register was called
 			adapter.Received ().Register (Arg.Any<IAchievement>());
 		}
 		
 		[Test]
-		[Ignore]
-		public void NotifyNetworkWhenAchievementIsUnlocked ()
+		public void ReportUnlockToAdapter ()
 		{
 			IAchievement registered = faker.CreateFakeAchievement ("a123", "kill", 0, 1);
-			achieve.Register (registered);
-			achieve.OnEvent ("kill");
+			network.OnAchievementUnlocked (registered);
 			
 			//Assert Unlocked was called
 			adapter.Received ().Unlocked (Arg.Any<IAchievement>());
@@ -49,6 +49,16 @@ namespace UnityTest
 			
 			//Assert Init was called
 			adapter.Received ().Init ();
+		}
+
+		[Test]
+		public void ReportProgress ()
+		{
+			IAchievement registered = faker.CreateFakeAchievement ("a123", "kill", 0, 1);
+			network.OnAchievementProgressIncreased (registered, 1);
+
+			//Assert Register was called
+			adapter.Received ().Progressed (Arg.Any<IAchievement>());
 		}
 
 		[Test]

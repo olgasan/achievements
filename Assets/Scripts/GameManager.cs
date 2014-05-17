@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
 		IAchievement a1 = new Achievement ("motd_breakAFew1", "kill", 2, 10, a1Reward, a1Reward);
 		IAchievement a2 = new Achievement ("motd_breakAFew2", "grind", 0, 15, a2Reward, a2Reward);
-		IAchievement a3 = new Achievement ("motd_breakAFew3", "kill", 2, 20, a1Reward, a1Reward);
+		IAchievement a3 = new Achievement ("motd_breakAFew3", "kill", 0, 20, a1Reward, a1Reward);
 
 		achieve.Register (a1);
 		achieve.Register (a2);

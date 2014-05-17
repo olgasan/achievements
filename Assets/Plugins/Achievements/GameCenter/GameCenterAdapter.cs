@@ -30,6 +30,12 @@ public class GameCenterAdapter : Brainz.IGamingNetworkAdapter
 		Debug.Log ("achievement unlocked " + achievement.Id);
 	}
 
+	public void Progressed (Brainz.IAchievement achievement)
+	{
+		double percent = ((double)achievement.Progress * 100) / (double)achievement.Goal;
+		Debug.Log ("achievement " + achievement.Id + " progressed on " + percent  + " points");
+	}
+
 	public void Register (Brainz.IAchievement achievement)
 	{
 		IAchievement a = Social.CreateAchievement();

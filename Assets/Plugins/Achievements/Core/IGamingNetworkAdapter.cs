@@ -9,5 +9,6 @@ namespace Brainz
 		void ShowUI ();
 		void Unlocked (IAchievement achievement);
 		void Register (IAchievement achievement);
+		void Progressed (IAchievement achievement);
 	}
 }
