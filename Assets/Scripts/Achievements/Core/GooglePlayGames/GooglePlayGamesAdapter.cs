@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Brainz;
+using GooglePlayGames;
 
 public class GooglePlayGamesAdapter : IGamingNetworkAdapter
 {
@@ -23,7 +24,10 @@ public class GooglePlayGamesAdapter : IGamingNetworkAdapter
 	public void Init ()
 	{
 		if (!IsAuthenticated)
+		{
+			PlayGamesPlatform.Activate();
 			Social.localUser.Authenticate (OnAuthenticate);
+		}
 	}
 	
 	public void ShowUI()
@@ -36,6 +40,17 @@ public class GooglePlayGamesAdapter : IGamingNetworkAdapter
 	{
 		Debug.Log ("Reporting achievement " + achievement.Id);
 		Social.ReportProgress(achievement.Id, 100.0f, HandleGooglePlayUnlockResponse);
+	}
+	
+	public void ResetAllAchievements ()
+	{
+		Debug.LogWarning("Can't reset achievements in Google Play Games");
+	}
+	
+	public void Progressed (IAchievement achievement)
+	{
+		double percent = ((double)achievement.Progress * 100) / (double)achievement.Goal;
+		Debug.Log ("achievement " + achievement.Id + " progressed on " + percent  + " points");
 	}
 
 	public void Register (IAchievement achievement)

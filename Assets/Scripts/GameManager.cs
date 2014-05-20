@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 		achieve = Locator.Instance.GetService <Achieve> ();
 
 		IGamingNetworkAdapter adapter = GetGamingNetworkAdapter();
-		GamingNetwork gamingNetwork = new GamingNetwork (achieve, adapter);
+		gamingNetwork = new GamingNetwork (achieve, adapter);
 		gamingNetwork.Init ();
 
 		Invoke ("OnGameLoaded", 3F);
