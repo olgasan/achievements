@@ -64,6 +64,29 @@ public class AssetHelper
 		}
 	}
 
+	public List<string> GetImagesFromPath (string baseFolderDir)
+	{
+		List <string> imgPaths = new List<string> ();
+
+		try
+		{
+			foreach (string f in Directory.GetFiles(baseFolderDir))
+			{
+				string lowerStr = f.ToLower ();
+				if (!lowerStr.Contains (".meta") && (lowerStr.Contains (".tga") || lowerStr.Contains (".png")) && !imgPaths.Contains (f)) 
+				{
+					imgPaths.Add (f);
+				}
+			}
+		}
+		catch (System.Exception excpt)
+		{
+			Debug.LogWarning (excpt.Message);
+		}
+
+		return imgPaths;
+	}
+
 	public void ApplyChangesToPrefab (GameObject selectedGameObject)
 	{
 		PrefabType prefabType = PrefabUtility.GetPrefabType (selectedGameObject);
@@ -75,6 +98,16 @@ public class AssetHelper
 		if (prefabType == PrefabType.PrefabInstance)
 		{
 			PrefabUtility.ReplacePrefab (parentObj, prefabParent, ReplacePrefabOptions.ConnectToPrefab);
+		}
+	}
+
+	public void BuildResourceFileFromActiveSelection ()
+	{
+		string path = EditorUtility.SaveFilePanel ("Save Resource", Application.dataPath, "TextureAssetBundle", "unity3d");
+		
+		if (path.Length != 0) 
+		{
+			BuildPipeline.BuildAssetBundle(Selection.activeObject, Selection.objects, path);
 		}
 	}
 }

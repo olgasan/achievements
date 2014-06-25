@@ -8,7 +8,7 @@ public class AchievementsPlugin
 	[MenuItem ("Tools/Achievements/Package", false, 22)]
 	public static void PackageCore ()
 	{
-		PluginPackager packager = new PluginPackager ();
+		PluginUtils packager = new PluginUtils ();
 
 		string[] assetPaths = new string[]
 		{

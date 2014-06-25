@@ -8,7 +8,7 @@ public class ServiceLocatorPlugin
 	[MenuItem ("Tools/Service Locator/Package", false, 12)]
 	public static void PackageCore ()
 	{
-		PluginPackager packager = new PluginPackager ();
+		PluginUtils packager = new PluginUtils ();
 
 		string[] assetPaths = new string[]
 		{
