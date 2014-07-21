@@ -27,8 +27,6 @@ namespace GooglePlayGames {
             }
 #if UNITY_ANDROID
             return new GooglePlayGames.Android.AndroidClient();
-#elif UNITY_IPHONE
-            return new GooglePlayGames.IOS.IOSClient();
 #else
             return new GooglePlayGames.BasicApi.DummyClient();
 #endif
