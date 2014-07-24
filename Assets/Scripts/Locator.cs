@@ -3,7 +3,6 @@
 public class Locator : ServiceLocator 
 {
 	private static IServiceLocator instance;
-	private EventListenerForAchievements eventListenerForAchievements;
 	private Achieve achieve;
 
 	public static IServiceLocator Instance
@@ -20,9 +19,6 @@ public class Locator : ServiceLocator
 	private Locator () : base ()
 	{
 		achieve = new Achieve ();
-		eventListenerForAchievements = new EventListenerForAchievements (achieve);
-
-		AddService (typeof (EventListenerForAchievements), eventListenerForAchievements);
 		AddService (typeof (Achieve), achieve);
 	}
 }

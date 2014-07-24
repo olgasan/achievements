@@ -50,6 +50,7 @@ public class GooglePlayGamesAdapter : IGamingNetworkAdapter
 	public void Progressed (IAchievement achievement)
 	{
 		double percent = ((double)achievement.Progress * 100) / (double)achievement.Goal;
+		Social.ReportProgress(achievement.Id, percent, HandleGooglePlayUnlockResponse);
 		Debug.Log ("achievement " + achievement.Id + " progressed on " + percent  + " points");
 	}
 

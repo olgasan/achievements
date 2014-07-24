@@ -97,7 +97,7 @@ PlayerSettings:
   iPadHighResLandscapeSplashScreen: {fileID: 0}
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
-  AndroidKeystoreName: G:/Projects/MOTD/development/MOTDGit/motd_gamevil_keystore.keystore
+  AndroidKeystoreName: Keys/Android/defaultdebug.keystore
   AndroidKeyaliasName: androiddebugkey
   resolutionDialogBanner: {fileID: 0}
   m_BuildTargetIcons:

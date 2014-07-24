@@ -5,7 +5,6 @@ using Brainz;
 public class GameManager : MonoBehaviour 
 {
 	private OnScreenDebugMenu menu;
-	private EventListenerForAchievements listener;
 	private Achieve achieve;
 	private GamingNetwork gamingNetwork;
 
@@ -13,7 +12,6 @@ public class GameManager : MonoBehaviour
 	{
 		menu = new OnScreenDebugMenu ();
 		
-		listener = Locator.Instance.GetService <EventListenerForAchievements> ();
 		achieve = Locator.Instance.GetService <Achieve> ();
 
 		IGamingNetworkAdapter adapter = GetGamingNetworkAdapter();
@@ -37,33 +35,42 @@ public class GameManager : MonoBehaviour
 
 	private void OnGameLoaded ()
 	{
-		IAchievementReward a1Reward = new AchievementReward (AchievementRewardType.Game, 12);
-		IAchievementReward a2Reward = new AchievementReward (AchievementRewardType.Game, 10);
+		IAchievementReward a1Reward = new AchievementReward (AchievementRewardType.Game, 10);
+		IAchievementReward a2Reward = new AchievementReward (AchievementRewardType.Game, 15);
+		IAchievementReward a3Reward = new AchievementReward (AchievementRewardType.Game, 20);
 
 #if UNITY_ANDROID
-		IAchievement a1 = new Achievement ("CgkIrOKywqEDEAIQAw", "kill", 2, 4, a1Reward, a1Reward);
-		IAchievement a2 = new Achievement ("CgkIrOKywqEDEAIQAA", "grind", 0, 1, a2Reward, a2Reward);
+		IAchievement a1 = new Achievement ("CgkIrOKywqEDEAIQAA", "a1", 0, 1, a1Reward, a1Reward);
+		IAchievement a2 = new Achievement ("CgkIrOKywqEDEAIQAQ", "a2", 0, 5, a2Reward, a2Reward);
+		IAchievement a3 = new Achievement ("CgkIrOKywqEDEAIQAg", "a3", 0, 15, a3Reward, a3Reward);
 #else
-		IAchievement a1 = new Achievement ("motd_breakAFew1", "kill", 2, 10, a1Reward, a1Reward);
-		IAchievement a2 = new Achievement ("motd_breakAFew2", "grind", 0, 15, a2Reward, a2Reward);
+		IAchievement a1 = new Achievement ("motd_breakAFew1", "a1", 0, 1, a1Reward, a1Reward);
+		IAchievement a2 = new Achievement ("motd_breakAFew2", "a2", 0, 5, a2Reward, a2Reward);
+		IAchievement a3 = new Achievement ("motd_breakAFew3", "a3", 0, 15, a3Reward, a3Reward);
 #endif
 
 		achieve.Register (a1);
 		achieve.Register (a2);
+		achieve.Register (a3);
 	}
 
 	private void OnGUI ()
 	{
 		menu.Reset ();
 
-		if (menu.DrawButton ("A"))
+		if (menu.DrawButton ("1"))
 		{
-			listener.OnKill ();
+			achieve.OnEvent ("a1");
 		}
 
-		if (menu.DrawButton ("B"))
+		if (menu.DrawButton ("2"))
 		{
-			listener.OnGrind ();
+			achieve.OnEvent ("a2");
+		}
+
+		if (menu.DrawButton ("3"))
+		{
+			achieve.OnEvent ("a3");
 		}
 
 		if (menu.DrawButton ("Show UI"))

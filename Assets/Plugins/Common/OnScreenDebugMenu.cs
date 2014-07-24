@@ -6,8 +6,8 @@ public class OnScreenDebugMenu
 	private const int BTN_X = 10;
 	private const int BTN_Y = 10;
 	
-	private const int BTN_W = 100;
-	private const int BTN_H = 40;
+	private const int BTN_W = 150;
+	private const int BTN_H = 60;
 	
 	private Rect rect;
 	private int col;

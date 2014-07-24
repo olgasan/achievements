@@ -41,6 +41,12 @@ public class GameCenterAdapter : Brainz.IGamingNetworkAdapter
 	public void Progressed (Brainz.IAchievement achievement)
 	{
 		double percent = ((double)achievement.Progress * 100) / (double)achievement.Goal;
+
+		IAchievement a = Social.CreateAchievement();
+		a.id = achievement.Id;
+		a.percentCompleted = percent;
+		a.ReportProgress(OnRegistered);
+
 		Debug.Log ("achievement " + achievement.Id + " progressed on " + percent  + " points");
 	}
 
